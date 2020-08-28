@@ -2,7 +2,7 @@
 
 
 /**
- *  Adding Dynamically complied menu links for BSJ to show previous months and years.
+ *  Adding Dynamically complied menu links for a Custom Post Type to show previous months and years.
  *  
  *  Instructions:  
  *

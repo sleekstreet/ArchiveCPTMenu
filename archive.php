@@ -1,10 +1,8 @@
 <?php
 /**
  * Template Name: Custom Post Type Archive
- * Template Post Type: post, page, bsj
+ * Template Post Type: post, page, Custom_Post_Types
  * @link https://codex.wordpress.org/Template_Hierarchy
- *
- * 
  */
 
 $q = get_queried_object();
@@ -89,7 +87,7 @@ include(TEMPLATEPATH . '/header.php');
                                 <?php if (is_tax() || is_category() || is_tag() || is_month() || is_archive()) :
                                     $category_query = new WP_Query( array(
                                             'posts_per_page' => 6,
-                                            'post_type' => 'bsj',
+                                            'post_type' => 'Custom_Post_Types',
                                             'post_status' => 'publish',
                                             'paged' => 1,
                                             'date_query' => array(
@@ -111,18 +109,18 @@ include(TEMPLATEPATH . '/header.php');
                                                     <?php if ( has_post_thumbnail() ) : ?>
                                                         <div class="image image-rewrite" style="background-image: url('<?php the_post_thumbnail_url( 'large' ); ?>');"></div>
                                                     <?php else : ?>
-                                                        <div class="image image-rewrite" style="background-image: url('<?php bloginfo('template_directory'); ?>/assets/img/bsj-default-thumb.jpg');"></div>
+                                                        <div class="image image-rewrite" style="background-image: url('<?php bloginfo('template_directory'); ?>/assets/img/Custom_Post_Types-default-thumb.jpg');"></div>
                                                     <?php endif; ?>
                                                     </a>
                                                 </div>
                                                 <div class="col-12 col-md-8">
                                                     <div class="metadata">
                                                         <?php the_time('F jS, Y'); ?> &bull;
-                                                        <?php $terms = wp_get_object_terms( $post->ID,  'bsj-category' );
+                                                        <?php $terms = wp_get_object_terms( $post->ID,  'Custom_Post_Types-category' );
                                                         if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) :
                                                             echo '<ul>';
                                                             foreach( $terms as $term ) :
-                                                                $termslist[] =  '<li><a href="' . get_term_link( $term->slug, 'bsj-category' ) . '">' . esc_html( $term->name ) . '</a></li>';
+                                                                $termslist[] =  '<li><a href="' . get_term_link( $term->slug, 'Custom_Post_Types-category' ) . '">' . esc_html( $term->name ) . '</a></li>';
                                                             endforeach;
                                                             echo implode(", ",$termslist);
                                                             unset($termslist);
@@ -130,12 +128,10 @@ include(TEMPLATEPATH . '/header.php');
                                                         endif; ?>
                                                     </div>
                                                     <h5 class="title">
-                                                        <?php if(class_exists('ICC_SIMPLE_MEMBERSHIP') && ICC_SIMPLE_MEMBERSHIP::showMemberLock($post->ID)) :
-                                                            echo '<i class="fa fa-lock" data-toggle="tooltip" data-placement="top" title="For ICC Members only"></i>';
-                                                        endif; ?>
+                                                        
                                                         <?php
-                                                        $bsj_sponsored= get_field('bsj-sponsored');
-                                                            if ($bsj_sponsored) {
+                                                        $Custom_Post_Types_sponsored= get_field('Custom_Post_Types-sponsored');
+                                                            if ($Custom_Post_Types_sponsored) {
                                                                 echo '<i class="fa fa-star" data-toggle="tooltip" data-placement="top" title="This is a Sponsored Article."></i>';
                                                             };
                                                             ?>
@@ -162,7 +158,7 @@ include(TEMPLATEPATH . '/header.php');
                                 <?php endif; ?>
                                 <?php if($category_query->max_num_pages > 1): ?>
                                     <button
-                                    id="bsj-load-more-archive-posts"
+                                    id="Custom_Post_Types-load-more-archive-posts"
                                     class="btn btn-secondary load-more"
                                     data-page="2"
                                     data-pagemax ="<?= $category_query->max_num_pages; ?>"
@@ -178,17 +174,15 @@ include(TEMPLATEPATH . '/header.php');
                 </div>
             </div>
             <div class="col-lg-3 d-none d-lg-block">
-                <div class="bsj-info">
+                <div class="Custom_Post_Types-info">
                     <h6>Submissions</h6>
-                    <div><a href="https://www.iccsafe.org/wp-content/uploads/2018-editorial-calendar.pdf" target="_blank" ref="noopener">Check out upcoming BSJ topics</a> and send us articles for consideration:</div>
                     <div class="meta-text">
-                        <button onclick="location.href='/content/bsj-submissions';" type="button" class="btn btn-primary d-block w-100 mx-auto my-2">Submit</button>
-                        <div>Or <a href="mailto:tlukasik@iccsafe.org?subject=Building Safety Journal submission">send by email</a></div>
+                        <button onclick="location.href='/content/Custom_Post_Types-submissions';" type="button" class="btn btn-primary d-block w-100 mx-auto my-2">Submit</button>
                     </div>
                     <hr />
                 </div>
-                <?php if(class_exists('ICC_AD')) ICC_AD::showAdds(); ?><!-- ads widget -->
-                <div class="bsj-archives">
+                
+                <div class="Custom_Post_Types-archives">
                     <h4>Past Issues</h4>
                     <ul>
                         <?php
@@ -201,7 +195,7 @@ include(TEMPLATEPATH . '/header.php');
                             'show_post_count' => false,
                             'echo'            => 1,
                             'order'           => 'DESC',
-                            'post_type'       => 'bsj'
+                            'post_type'       => 'Custom_Post_Types'
                         ));
 
 
@@ -213,10 +207,10 @@ include(TEMPLATEPATH . '/header.php');
     </div>
 </main><!-- #main-content -->
 <script>
-    var bsj_posts = '<?php echo serialize( $category_query->query_vars ) ?>',
-    bsj_current_page = 1,
-    bsj_max_page = <?php echo $category_query->max_num_pages ?>,
-    bsj_tax_query = '<?php echo serialize( $category_query->tax_query ) ?>'
+    var Custom_Post_Types_posts = '<?php echo serialize( $category_query->query_vars ) ?>',
+    Custom_Post_Types_current_page = 1,
+    Custom_Post_Types_max_page = <?php echo $category_query->max_num_pages ?>,
+    Custom_Post_Types_tax_query = '<?php echo serialize( $category_query->tax_query ) ?>'
 </script>
 <?php
 get_footer();
